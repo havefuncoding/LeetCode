@@ -54,4 +54,4 @@ class Solution:
         if res > int_max:                               # Return int_max if res above threshold
             return int_max
   
-        return num                                      
+        return res                                      
