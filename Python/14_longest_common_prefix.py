@@ -27,3 +27,22 @@ class Solution:
                 res = len(str)
         
         return res                          # Return length of shortest string
+
+
+
+    def longestCommonPrefix_pythonic(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        length = len(strs)
+        
+        if length == 0: return ""                   # Return empty if input empty
+        if length == 1: return strs[0]              # Return the one str if only one in input
+        
+        strs_sorted = sorted(strs, key=len)         # Sort strs by length
+        for i, c in enumerate(strs_sorted[0]):      # Go through the chars in shortest str
+            for s in strs_sorted[1:]:               # And compare against char of other strs
+                if s[i] != c:                       
+                    return strs_sorted[0][:i]       # If sharing stops, return res so far
+        return strs_sorted[0]                       # If outside loop, return shortest str
