@@ -32,3 +32,26 @@ class Solution:
             #print(f"i={i}, c={c}, add={add}, res={res}")
             
         return res
+
+
+    def romanToInt_cleaner(self, s: str) -> int:
+        """
+        Input: "LVIII"
+        Output: 58
+        Explanation: L = 50, V= 5, III = 3.
+        """
+        values = {'I':1,'V':5,'X':10,'L':50,'C':100,'D':500,'M':1000}
+        prev = 0                # Track previous
+        res = 0                 # Sum all
+
+        for i in s[::-1]:       # Loop every char in string, right to left, small to big
+            curr = values[i]    
+            if prev > curr:     # If current char value is less than previous char value
+                res -= curr     # Subtract current char value from result
+            else:       
+                res += curr     # Otherwise add current char value to result
+            
+            prev = curr         # Update previous char to current char
+            
+        return res              # Return aggregate
+                
