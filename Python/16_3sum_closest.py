@@ -1,3 +1,4 @@
+# https://leetcode.com/problems/3sum-closest/submissions/
 class Solution:
     def threeSumClosest(self, nums, target):
         """
@@ -16,32 +17,33 @@ class Solution:
     
         for curr in range(input_size - 2):      # Iterate 1st to 3rd-to-last trios
             
-            if curr > 0 and nums[curr] == nums[curr-1]:             # Skip if a repeat
+            if curr > 0 and nums[curr] == nums[curr-1]: # Skip if a repeat
                 continue              
-            left = curr + 1                                         # Define start
-            right = input_size -1
+            left = curr + 1                     # Start left just after current    
+            right = input_size -1               # Start right at the end
             
-            print(f"\n\n----- {curr} {left} {right} ------", end="")
-        
-            while left < right:
-                this_sum = nums[curr] + nums[left] + nums[right]    # Get sum
+            while left < right:                 # While left < right
+                this_sum = nums[curr] + nums[left] + nums[right]    # Get sum 
+                
+                #print(f"\nsum({this_sum})\t{nums}\tc({nums[curr]}) l({nums[left]}) r({nums[right]})\n")
+                
                 this_prox = abs(this_sum - target)                  # Get proximity
                 
-                print(f"\tres({this_sum}) prox({this_prox})", end="\t-> ")
-                
-                if this_prox < res_prox:                            # Compare proximity
-                    res_sum = this_sum                              # Update if closer
+                if this_prox < res_prox:                            # Compare and update if closer
+                    res_sum = this_sum                              
                     res_prox = this_prox
-                left += 1                                     
-                right -= 1
                 
-                print(f"\tres({res_sum}) prox({res_prox})", end="\t")
+                if this_sum < target:                               # Move right if sum < target
+                    left += 1
+                    while left < right and nums[left] == nums[left-1]:
+                        left += 1                                   # Skipping repeats
+                    
+                elif this_sum > target:                             # Move left is sum > target
+                    right -= 1
+                    while left < right and nums[right] == nums[right+1]:
+                        right -= 1                                  # Skipping repeats
+                    
+                else:                                               # If sum == target, done.
+                    return res_sum                                  # Either res_sum or this_sum
 
-                while left < right and nums[left] == nums[left-1]:
-                    left += 1                                       # Skip repeats
-                while left < right and nums[right] == nums[right+1]:
-                    right -= 1                                      # Skip repeats
-                   
-                print(f"l({left}), r({right})")
-                
         return res_sum
